@@ -27,13 +27,15 @@ ar=(1.0d0,0.0d0) ! 1 (real)
 	a=-ai*alpha/4.0d0
 	b=0.50d0*(ar+ai*alpha)
 	c=-ai*alpha/4.0d0
-
+	
+!wavefunction init
 do j=0,jmax-1
 	x=dx*j
 	psi(j)=(ar/(dsqrt(sigma)*sspi))*dexp(-(x-x0)**2/(2.0d0*sigma**2))*(ar*dcos(k0*x)+ai*dsin(k0*x))
 	write(10,*) j, dreal(psi(j))
 enddo
 
+!integrates wavefunction
 do nt=1, ntmax
 	p = 0.0d0
 	p_sum = 0.0d0
@@ -55,7 +57,8 @@ enddo
 end program proj6
 
 
-
+!!Standard subroutine for solving tridiagonal matrices
+!!algorithm from numerical recipes in fortran90
 SUBROUTINE TRIDAG(A,B,C,R,U,N)
 INTEGER :: N,J
 INTEGER, PARAMETER :: NMAX=10000
